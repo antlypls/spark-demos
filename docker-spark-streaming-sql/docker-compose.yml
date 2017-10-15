@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: antlypls/zookeeper
+
+  kafka:
+    image: antlypls/kafka
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_CREATE_TOPICS: "events:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+  java:
+    image: openjdk:jre
+    command: bash
+    ports:
+      - "4040:4040"
+    volumes:
+      - ./build:/build
+    working_dir: /build
+    depends_on:
+      - zookeeper
+      - kafka
