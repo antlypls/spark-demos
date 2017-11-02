@@ -5,7 +5,7 @@ services:
     image: antlypls/zookeeper
 
   kafka:
-    image: antlypls/kafka
+    image: antlypls/kafka:0.10.2.1_2.11
     depends_on:
       - zookeeper
     environment:
